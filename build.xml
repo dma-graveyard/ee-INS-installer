@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="eeins-installer" default="installer">
+	
+    <property file="${basedir}/ant.properties" />
+    <property file="${basedir}/.ant.properties" />
+	
+	<include file="${eeins.dir}/build.xml"/>
+	
+	<property name="distdir" value="${basedir}/dist" />
+	<property name="extlib" value="${basedir}/extlib" />
+	<property name="resources.dir" value="${basedir}/resources" />	
+	<property name="launch4j.dir" location="${basedir}/launch4j" />	
+	
+	<taskdef name="launch4j" 
+	     classname="net.sf.launch4j.ant.Launch4jTask"
+	     classpath="${launch4j.dir}/launch4j.jar:${launch4j.dir}/xstream.jar" />
+	
+	<target name="clean">
+		<delete dir="${distdir}" />
+	</target>
+
+	<target name="makedist" depends="clean">		
+		<!-- Make backup of existing dist folder in eeins -->
+		<move file="${eeins.dir}/dist" tofile="${eeins.dir}/dist.bak" failonerror="false" />
+		<!-- Clean and compile -->
+		<ant dir="${eeins.dir}" target="clean" inheritall="false"/>
+		<ant dir="${eeins.dir}" target="dist" inheritall="false"/>
+		<!-- Move new dist here and restore backup -->
+		<move file="${eeins.dir}/dist" tofile="${basedir}/dist" />
+		<move file="${eeins.dir}/dist.bak" tofile="${eeins.dir}/dist" failonerror="false" />
+		<!-- Copy own local settings to dist -->
+		<copy todir="${distdir}" overwrite="true">
+			<fileset dir="${resources.dir}" />
+		</copy>		
+	</target>
+
+	<target name="exe" depends="makedist" >
+		<launch4j configFile="./launch4j.xml" />
+	</target>
+	
+	<target name="installer" depends="exe">
+		<exec executable="${nsis.location}/makensis.exe" >
+            <arg value="/DVERSION=${version}"/>
+			<arg value="${basedir}/setup.nsi"/>
+		</exec>
+	</target>
+	
+</project>
