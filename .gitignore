@@ -2,3 +2,4 @@ installers/*.exe
 dist/.msi
 dist/.routes
 dist/log/
+dist/settings.properties
