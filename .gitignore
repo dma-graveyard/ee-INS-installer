@@ -1,1 +1,4 @@
 installers/*.exe
+dist/.msi
+dist/.routes
+dist/log/
