@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="eeins-installer" default="installer">
+<project name="acv-installer" default="installer">
 	
     <property file="${basedir}/ant.properties" />
     <property file="${basedir}/.ant.properties" />
 	
-	<include file="${eeins.dir}/build.xml"/>
+	<include file="${acv.dir}/build.xml"/>
 	
 	<property name="distdir" value="${basedir}/dist" />
 	<property name="extlib" value="${basedir}/extlib" />
@@ -21,13 +21,13 @@
 
 	<target name="makedist" depends="clean">		
 		<!-- Make backup of existing dist folder in eeins -->
-		<move file="${eeins.dir}/dist" tofile="${eeins.dir}/dist.bak" failonerror="false" />
+		<move file="${acv.dir}/dist" tofile="${acv.dir}/dist.bak" failonerror="false" />
 		<!-- Clean and compile -->
-		<ant dir="${eeins.dir}" target="clean" inheritall="false"/>
-		<ant dir="${eeins.dir}" target="dist" inheritall="false"/>
+		<ant dir="${acv.dir}" target="clean" inheritall="false"/>
+		<ant dir="${acv.dir}" target="dist" inheritall="false"/>
 		<!-- Move new dist here and restore backup -->
-		<move file="${eeins.dir}/dist" tofile="${basedir}/dist" />
-		<move file="${eeins.dir}/dist.bak" tofile="${eeins.dir}/dist" failonerror="false" />
+		<move file="${acv.dir}/dist" tofile="${basedir}/dist" />
+		<move file="${acv.dir}/dist.bak" tofile="${acv.dir}/dist" failonerror="false" />
 		<!-- Copy own local settings to dist -->
 		<copy todir="${distdir}" overwrite="true">
 			<fileset dir="${resources.dir}" />
