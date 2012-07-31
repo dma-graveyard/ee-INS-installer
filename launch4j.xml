@@ -15,7 +15,7 @@
   <icon>dist/images/appicon.ico</icon>
   <var>java.library.path=./navicon/native/</var>
   <classPath>
-    <mainClass>dk.frv.enav.esd.ESd</mainClass>
+    <mainClass>dk.frv.enav.esd.ESD</mainClass>
     <cp>.</cp>
     <cp>lib/*</cp>
   </classPath>
